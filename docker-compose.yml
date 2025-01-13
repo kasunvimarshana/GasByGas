@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  gasbygas_app:
+    build:
+      context: ./docker/php
+    container_name: gasbygas_app
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_HOST=gasbygas_mysql
+      - DB_PORT=3306
+      - DB_DATABASE=gasbygas
+      - DB_USERNAME=gasbygas_user
+      - DB_PASSWORD=gasbygas_pass
+    networks:
+      - gasbygas_network
+
+  gasbygas_webserver:
+    image: nginx:latest
+    container_name: gasbygas_webserver
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/certs:/etc/nginx/certs
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - gasbygas_app
+    networks:
+      - gasbygas_network
+
+  gasbygas_mysql:
+    image: mysql:8.0
+    container_name: gasbygas_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret
+      MYSQL_DATABASE: gasbygas
+      MYSQL_USER: gasbygas_user
+      MYSQL_PASSWORD: gasbygas_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - gasbygas_network
+
+  gasbygas_phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: gasbygas_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: gasbygas_mysql
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "8080:80"
+    depends_on:
+      - gasbygas_mysql
+    networks:
+      - gasbygas_network
+
+networks:
+  gasbygas_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
