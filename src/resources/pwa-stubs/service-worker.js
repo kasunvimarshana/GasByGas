@@ -111,3 +111,48 @@ self.addEventListener('message', event => {
         self.skipWaiting();
     }
 });
+
+// Push notification received
+self.addEventListener('push', event => {
+    console.log('[Service Worker] Push Received.');
+
+    let data = {};
+    if (event.data) {
+        data = event.data.json();
+    }
+
+    const title = data.title || 'Default Title';
+    const options = {
+        body: data.body || 'Default body content.',
+        icon: data.icon || '/img/icon.png',
+        badge: data.badge || '/img/badge.png',
+        data: {
+            url: data.url || '/'
+        }
+    };
+
+    event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click event
+self.addEventListener('notificationclick', event => {
+    console.log('[Service Worker] Notification click Received.');
+
+    event.notification.close();
+
+    const notificationData = event.notification.data;
+
+    // Open the URL associated with the notification
+    event.waitUntil(
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
+            for (const client of clientList) {
+                if (client.url === notificationData.url && 'focus' in client) {
+                    return client.focus();
+                }
+            }
+            if (clients.openWindow) {
+                return clients.openWindow(notificationData.url);
+            }
+        })
+    );
+});
