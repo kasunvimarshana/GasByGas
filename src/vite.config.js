@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import path from 'path';
+// import fs from 'fs';
 
 export default defineConfig({
     plugins: [
@@ -8,4 +10,20 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {}
+    },
+    build: {
+        rollupOptions: {
+            input: {
+                app: path.resolve(__dirname, 'resources/js/app.js'),
+            },
+            output: {
+                // automatically processes assets (like images, fonts) and copies them to the output folder ('public/assets').
+                assetFileNames: (assetInfo) => {
+                    return 'assets/[name].[hash][extname]'; // Default output for other assets
+                }
+            },
+        },
+    },
 });
