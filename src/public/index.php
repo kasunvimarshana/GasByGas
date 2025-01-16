@@ -1,5 +1,8 @@
 <?php
 
+// declare(strict_types=1);// enable type checking
+// declare(strict_types=0);// disable type checking
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
