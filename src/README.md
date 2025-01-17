@@ -1,66 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Project - Package Overview
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This document provides an overview of the third-party **PHP** and **JavaScript** packages used in this Laravel project. It includes details about the package names, their purposes, installation instructions, and configuration steps.
 
-## About Laravel
+## Table of Contents
+- [Installed Packages](#installed-packages)
+  - [Required PHP Packages](#required-php-packages)
+  - [Development PHP Packages](#development-php-packages)
+  - [Required JavaScript Packages](#required-javascript-packages)
+  - [Development JavaScript Packages](#development-javascript-packages)
+- [Package Descriptions](#package-descriptions)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installed Packages
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The following third-party packages are installed in this Laravel project:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Required PHP Packages
+- `spatie/laravel-activitylog`
+- `spatie/laravel-permission`
+- `beyondcode/laravel-websockets`
+- `pusher/pusher-php-server`
+- `laravel-notification-channels/webpush`
 
-## Learning Laravel
+### Development PHP Packages
+- `barryvdh/laravel-debugbar`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Required JavaScript Packages
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Development JavaScript Packages
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Package Descriptions
 
-## Laravel Sponsors
+### Required PHP Packages
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### `spatie/laravel-activitylog`
+- **Purpose**: The spatie/laravel-activitylog package provides easy to use functions to log the activities of the users of your app. It can also automatically log model events. All activity will be stored in the activity_log table.
+- **Version**: `^4.9`
+- **Installation**:
+  ```bash
+  composer require spatie/laravel-activitylog
+  ```
 
-### Premium Partners
+#### `spatie/laravel-permission`
+- **Purpose**: This package allows you to manage user permissions and roles in a database.
+- **Version**: `^6.10`
+- **Installation**:
+  ```bash
+  composer require spatie/laravel-permission
+  ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+#### `beyondcode/laravel-websockets`
+- **Purpose**: Laravel WebSockets is a package for Laravel 5.7 and up that will get your application started with WebSockets in no-time! It has a drop-in Pusher API replacement, has a debug dashboard, realtime statistics and even allows you to create custom WebSocket controllers.
+- **Version**: `^1.14`
+- **Installation**:
+  ```bash
+  composer require beyondcode/laravel-websockets:^1.14 -W
+  ```
 
-## Contributing
+#### `pusher/pusher-php-server`
+- **Purpose**: PHP library for interacting with the Pusher Channels HTTP API.
+- **Version**: `^7.2`
+- **Installation**:
+  ```bash
+  composer require pusher/pusher-php-server
+  ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### `laravel-notification-channels/webpush`
+- **Purpose**: This package makes it easy to send web push notifications with Laravel.
+- **Version**: `^9.0`
+- **Installation**:
+  ```bash
+  composer require laravel-notification-channels/webpush
+  ```
 
-## Code of Conduct
+### Development PHP Packages
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### `barryvdh/laravel-debugbar`
+- **Purpose**: This is a package to integrate PHP Debug Bar with Laravel. It includes a ServiceProvider to register the debugbar and attach it to the output.
+- **Version**: `^3.14`
+- **Installation**:
+  ```bash
+  composer require barryvdh/laravel-debugbar --dev
+  ```
