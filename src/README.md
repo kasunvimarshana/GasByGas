@@ -32,6 +32,7 @@ The following third-party packages are installed in this Laravel project:
 - `admin-lte`
 - `sanitize.css`
 - `bootstrap-icons`
+- `toastr`
 
 ### Development JavaScript Packages
 - `sass`
@@ -146,6 +147,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install bootstrap-icons@^1.11.3
+  ```
+
+#### `toastr`
+- **Purpose**: toastr is a Javascript library for non-blocking notifications. jQuery is required. The goal is to create a simple core library that can be customized and extended.
+- **Version**: `^2.1.4`
+- **Installation**:
+  ```bash
+  npm install toastr@^2.1.4
   ```
 
 ### Development JavaScript Packages

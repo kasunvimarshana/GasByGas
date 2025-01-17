@@ -36,3 +36,19 @@ import '@fortawesome/fontawesome-free/js/all.js';
 
 // Import AdminLTE
 import 'admin-lte';
+
+// Import Toastr
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
+// Set default options for Toastr
+toastr.options = {
+    closeButton: true,
+    progressBar: true,
+    positionClass: 'toast-top-right',
+    timeOut: '5000'
+};
+
+// Make toastr globally available
+window.toastr = toastr;
+
