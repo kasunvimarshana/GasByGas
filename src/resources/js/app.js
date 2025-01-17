@@ -30,3 +30,6 @@ window.Popper = Popper;
 // 'bootstrap' includes both Bootstrap's JavaScript functionality and necessary CSS.
 // import * as bootstrap from 'bootstrap';
 import 'bootstrap';
+
+// Import Font Awesome
+import '@fortawesome/fontawesome-free/js/all.js';

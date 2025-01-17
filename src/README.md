@@ -28,6 +28,7 @@ The following third-party packages are installed in this Laravel project:
 - `jquery`
 - `@popperjs/core`
 - `bootstrap`
+- `@fortawesome/fontawesome-free`
 
 ### Development JavaScript Packages
 - `sass`
@@ -110,6 +111,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install bootstrap@^5.3.3
+  ```
+
+#### `@fortawesome/fontawesome-free`
+- **Purpose**: Font Awesome is the Internet's icon library and toolkit.
+- **Version**: `^6.7.2`
+- **Installation**:
+  ```bash
+  npm install @fortawesome/fontawesome-free@^6.7.2
   ```
 
 ### Development JavaScript Packages
