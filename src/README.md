@@ -30,6 +30,7 @@ The following third-party packages are installed in this Laravel project:
 - `bootstrap`
 - `@fortawesome/fontawesome-free`
 - `admin-lte`
+- `sanitize.css`
 
 ### Development JavaScript Packages
 - `sass`
@@ -128,6 +129,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install admin-lte@^4.0.0-beta3
+  ```
+
+#### `sanitize.css`
+- **Purpose**: sanitize.css is a CSS library that provides consistent, cross-browser default styling of HTML elements alongside useful defaults.
+- **Version**: `^13.0.0`
+- **Installation**:
+  ```bash
+  npm install sanitize.css@^13.0.0
   ```
 
 ### Development JavaScript Packages
