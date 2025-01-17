@@ -17,6 +17,7 @@ export default defineConfig({
             '@fortawesome': path.resolve(__dirname, 'node_modules/@fortawesome'),
             '~admin-lte': path.resolve(__dirname, 'node_modules/admin-lte'),
             '~sanitize.css': path.resolve(__dirname, 'node_modules/sanitize.css'),
+            '~sweetalert2': path.resolve(__dirname, 'node_modules/sweetalert2'),
         }
     },
     build: {

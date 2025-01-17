@@ -52,3 +52,14 @@ toastr.options = {
 // Make toastr globally available
 window.toastr = toastr;
 
+// Import Swal
+import Swal from 'sweetalert2';
+
+// Set default options for Swal
+Swal.mixin({
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+});
+
+// Make Swal globally available
+window.Swal = Swal;

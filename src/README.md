@@ -33,6 +33,7 @@ The following third-party packages are installed in this Laravel project:
 - `sanitize.css`
 - `bootstrap-icons`
 - `toastr`
+- `sweetalert2`
 
 ### Development JavaScript Packages
 - `sass`
@@ -155,6 +156,15 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install toastr@^2.1.4
+  ```
+
+#### `sweetalert2`
+- **Purpose**: A beautiful, responsive, customizable, accessible (WAI-ARIA) replacement
+for JavaScript's popup boxes.
+- **Version**: `^11.15.10`
+- **Installation**:
+  ```bash
+  npm install sweetalert2@^11.15.10
   ```
 
 ### Development JavaScript Packages
