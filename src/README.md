@@ -25,6 +25,7 @@ The following third-party packages are installed in this Laravel project:
 - `barryvdh/laravel-debugbar`
 
 ### Required JavaScript Packages
+- `jquery`
 
 ### Development JavaScript Packages
 
@@ -37,7 +38,7 @@ The following third-party packages are installed in this Laravel project:
 - **Version**: `^4.9`
 - **Installation**:
   ```bash
-  composer require spatie/laravel-activitylog
+  composer require spatie/laravel-activitylog:^4.9
   ```
 
 #### `spatie/laravel-permission`
@@ -45,7 +46,7 @@ The following third-party packages are installed in this Laravel project:
 - **Version**: `^6.10`
 - **Installation**:
   ```bash
-  composer require spatie/laravel-permission
+  composer require spatie/laravel-permission:^6.10
   ```
 
 #### `beyondcode/laravel-websockets`
@@ -61,7 +62,7 @@ The following third-party packages are installed in this Laravel project:
 - **Version**: `^7.2`
 - **Installation**:
   ```bash
-  composer require pusher/pusher-php-server
+  composer require pusher/pusher-php-server:^7.2
   ```
 
 #### `laravel-notification-channels/webpush`
@@ -69,7 +70,7 @@ The following third-party packages are installed in this Laravel project:
 - **Version**: `^9.0`
 - **Installation**:
   ```bash
-  composer require laravel-notification-channels/webpush
+  composer require laravel-notification-channels/webpush:^9.0
   ```
 
 ### Development PHP Packages
@@ -80,4 +81,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   composer require barryvdh/laravel-debugbar --dev
+  ```
+
+### Required JavaScript Packages
+
+#### `jquery`
+- **Purpose**: jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
+- **Version**: `^3.7.1`
+- **Installation**:
+  ```bash
+  npm install jquery@^3.7.1
   ```
