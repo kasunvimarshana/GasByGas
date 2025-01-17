@@ -29,6 +29,7 @@ The following third-party packages are installed in this Laravel project:
 - `@popperjs/core`
 - `bootstrap`
 - `@fortawesome/fontawesome-free`
+- `admin-lte`
 
 ### Development JavaScript Packages
 - `sass`
@@ -119,6 +120,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install @fortawesome/fontawesome-free@^6.7.2
+  ```
+
+#### `admin-lte`
+- **Purpose**: AdminLTE is a fully responsive administration template.
+- **Version**: `^4.0.0-beta3`
+- **Installation**:
+  ```bash
+  npm install admin-lte@^4.0.0-beta3
   ```
 
 ### Development JavaScript Packages

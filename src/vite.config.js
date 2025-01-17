@@ -14,6 +14,7 @@ export default defineConfig({
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
             '@fortawesome': path.resolve(__dirname, 'node_modules/@fortawesome'),
+            '~admin-lte': path.resolve(__dirname, 'node_modules/admin-lte'),
         }
     },
     build: {

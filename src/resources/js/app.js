@@ -33,3 +33,6 @@ import 'bootstrap';
 
 // Import Font Awesome
 import '@fortawesome/fontawesome-free/js/all.js';
+
+// Import AdminLTE
+import 'admin-lte';
