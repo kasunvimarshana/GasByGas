@@ -26,8 +26,11 @@ The following third-party packages are installed in this Laravel project:
 
 ### Required JavaScript Packages
 - `jquery`
+- `@popperjs/core`
+- `bootstrap`
 
 ### Development JavaScript Packages
+- `sass`
 
 ## Package Descriptions
 
@@ -91,4 +94,30 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install jquery@^3.7.1
+  ```
+
+#### `@popperjs/core`
+- **Purpose**: Tooltip & Popover Positioning Engine.
+- **Version**: `^2.11.8`
+- **Installation**:
+  ```bash
+  npm install @popperjs/core@^2.11.8
+  ```
+
+#### `bootstrap`
+- **Purpose**: Bootstrap is a powerful, feature-packed frontend toolkit.
+- **Version**: `^5.3.3`
+- **Installation**:
+  ```bash
+  npm install bootstrap@^5.3.3
+  ```
+
+### Development JavaScript Packages
+
+#### `sass`
+- **Purpose**: A pure JavaScript implementation of Sass. Sass makes CSS fun again.
+- **Version**: `^1.83.4`
+- **Installation**:
+  ```bash
+  npm install sass@^1.83.4 --save-dev
   ```

@@ -18,3 +18,15 @@ $(() => {
     // It logs a message to the console, confirming that jQuery is properly integrated.
     console.log(`jQuery is working!`);
 });
+
+// Import Popper.js for Bootstrap's tooltips, popovers, and dropdowns
+// Popper.js is used for positioning elements like tooltips and popovers in Bootstrap.
+import * as Popper from '@popperjs/core';
+// Make Popper globally available for Bootstrap's JavaScript components
+window.Popper = Popper;
+
+// Import Bootstrap's JavaScript components
+// This imports the entire Bootstrap JavaScript library (e.g., modals, tooltips, etc.)
+// 'bootstrap' includes both Bootstrap's JavaScript functionality and necessary CSS.
+// import * as bootstrap from 'bootstrap';
+import 'bootstrap';
