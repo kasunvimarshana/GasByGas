@@ -18,6 +18,7 @@
         "bootstrap": "^5.3.3",
         "bootstrap-icons": "^1.11.3",
         "jquery": "^3.7.1",
+        "overlayscrollbars": "^2.10.1",
         "sanitize.css": "^13.0.0",
         "sweetalert2": "^11.15.10",
         "toastr": "^2.1.4"

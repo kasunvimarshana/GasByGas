@@ -34,6 +34,7 @@ The following third-party packages are installed in this Laravel project:
 - `bootstrap-icons`
 - `toastr`
 - `sweetalert2`
+- `overlayscrollbars`
 
 ### Development JavaScript Packages
 - `sass`
@@ -165,6 +166,14 @@ for JavaScript's popup boxes.
 - **Installation**:
   ```bash
   npm install sweetalert2@^11.15.10
+  ```
+
+#### `overlayscrollbars`
+- **Purpose**: A javascript scrollbar plugin that hides the native scrollbars, provides custom styleable overlay scrollbars, and preserves the native functionality and feel.
+- **Version**: `^2.10.1`
+- **Installation**:
+  ```bash
+  npm install overlayscrollbars@^2.10.1
   ```
 
 ### Development JavaScript Packages
