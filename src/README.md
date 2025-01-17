@@ -31,6 +31,7 @@ The following third-party packages are installed in this Laravel project:
 - `@fortawesome/fontawesome-free`
 - `admin-lte`
 - `sanitize.css`
+- `bootstrap-icons`
 
 ### Development JavaScript Packages
 - `sass`
@@ -137,6 +138,14 @@ The following third-party packages are installed in this Laravel project:
 - **Installation**:
   ```bash
   npm install sanitize.css@^13.0.0
+  ```
+
+#### `bootstrap-icons`
+- **Purpose**: Official open source SVG icon library for Bootstrap with over 2,000 icons.
+- **Version**: `^1.11.3`
+- **Installation**:
+  ```bash
+  npm install bootstrap-icons@^1.11.3
   ```
 
 ### Development JavaScript Packages
