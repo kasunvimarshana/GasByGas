@@ -9,6 +9,8 @@ use App\Services\ActivityLoggerService\ActivityLoggerInterface;
 use App\Services\ActivityLoggerService\ActivityLoggerService;
 use App\Services\LocalFileService\LocalFileServiceInterface;
 use App\Services\LocalFileService\LocalFileService;
+use App\Services\LocaleService\LocaleServiceInterface;
+use App\Services\LocaleService\LocaleService;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -27,6 +29,9 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->bind(LocalFileServiceInterface::class,
                             LocalFileService::class);
+
+        $this->app->bind(LocaleServiceInterface::class,
+                            LocaleService::class);
     }
 
     /**
