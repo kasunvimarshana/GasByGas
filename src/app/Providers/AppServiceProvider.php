@@ -3,6 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Spatie\Activitylog\Facades\CauserResolver;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
+
 use App\Services\NotificationService\NotificationServiceInterface;
 use App\Services\NotificationService\NotificationFactory;
 use App\Services\ActivityLoggerService\ActivityLoggerInterface;
@@ -54,5 +60,19 @@ class AppServiceProvider extends ServiceProvider {
      */
     public function boot(): void {
         //
+        // Globally resolve the causer to the authenticated user
+        CauserResolver::resolveUsing(function (Model $subject = null) {
+            return auth()->user() ?: null; // Return null if no user is authenticated
+        });
+
+        // Sharing Data Across Views
+        View::composer('layouts.app', function ($view) {
+            $view->with('appName', config('app.name'));
+        });
+
+        // Using Eloquent's morphMap for polymorphic relationships to map short names to full class names
+        Relation::morphMap([
+            'user' => \App\Models\User::class,    // Short name 'user' maps to the full class name
+        ]);
     }
 }
