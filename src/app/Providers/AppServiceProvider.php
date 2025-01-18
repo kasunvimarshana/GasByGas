@@ -15,6 +15,8 @@ use App\Services\PageDetailsService\PageDetailsServiceInterface;
 use App\Services\PageDetailsService\PageDetailsService;
 use App\Services\PaginationService\PaginationServiceInterface;
 use App\Services\PaginationService\PaginationService;
+use App\Services\RolePermissionService\RolePermissionServiceInterface;
+use App\Services\RolePermissionService\RolePermissionService;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -42,6 +44,9 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->bind(PaginationServiceInterface::class,
                             PaginationService::class);
+
+        $this->app->bind(RolePermissionServiceInterface::class,
+                            RolePermissionService::class);
     }
 
     /**
