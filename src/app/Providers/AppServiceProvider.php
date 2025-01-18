@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\NotificationService\NotificationServiceInterface;
+use App\Services\NotificationService\NotificationFactory;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -12,6 +14,9 @@ class AppServiceProvider extends ServiceProvider {
         //
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
+
+        $this->app->bind(NotificationServiceInterface::class,
+                            fn() => NotificationFactory::create('toastr'));
     }
 
     /**
