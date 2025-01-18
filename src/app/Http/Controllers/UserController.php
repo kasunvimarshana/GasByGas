@@ -1,0 +1,165 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Exception;
+// use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController\BaseController;
+use App\Services\NotificationService\NotificationServiceInterface;
+use App\Services\PaginationService\PaginationServiceInterface;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Services\UserService\UserService;
+use App\Models\User;
+
+class UserController extends BaseController {
+    protected NotificationServiceInterface $notificationService;
+    protected PaginationServiceInterface $paginationService;
+    protected UserService $userService;
+
+    public function __construct(
+        NotificationServiceInterface $notificationService,
+        PaginationServiceInterface $paginationService,
+        UserService $userService
+    ) {
+        parent::__construct($notificationService);
+
+        $this->notificationService = $notificationService;
+        $this->paginationService = $paginationService;
+        $this->userService = $userService;
+    }
+
+    public function index(Request $request) {
+        // $rules = [];
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            $userQueryBuilder = $this->userService->query();
+            $users = $this->paginationService->paginate($userQueryBuilder,
+                                                        $request->perPage ?? 15);
+
+            // Handle JSON response if requested
+            if ($request->expectsJson()) {
+                return $this->formatJsonResponse(true, '', $users, null);
+            }
+
+            return view('pages.users.index', compact('users'));
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('messages.general_error', []));
+        }
+    }
+
+    public function create() {
+        return view('pages.users.create');
+    }
+
+    public function store(StoreUserRequest $request) {
+        // $rules = $request->rules(); // []
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            DB::beginTransaction(); // Main transaction
+
+            // Create user from User module
+            $user = $this->userService->create($request->all());
+
+            DB::commit(); // Commit transaction if all succeeds
+
+            return $this->handleResponse(
+                trans('messages.thank_you', []),
+                null,
+                'users.index',
+                [],
+            );
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback if any operation fails
+
+            return $this->handleException($e, trans('messages.general_error', []));
+        }
+    }
+
+    public function edit(User $user) {
+        return view('pages.users.edit', compact('user'));
+    }
+
+    public function update(UpdateUserRequest $request, User $user) {
+        // $rules = $request->rules(); // []
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            DB::beginTransaction(); // Main transaction
+
+            // Create user from User module
+            $user = $this->userService->update($user->id, $request->all());
+
+            DB::commit(); // Commit transaction if all succeeds
+
+            return $this->handleResponse(
+                trans('messages.thank_you', []),
+                null,
+                'users.index',
+                [],
+            );
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback if any operation fails
+
+            return $this->handleException($e, trans('messages.general_error', []));
+        }
+    }
+
+    public function destroy(User $user) {
+        // $rules = $request->rules(); // []
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            DB::beginTransaction(); // Main transaction
+
+            // Create user from User module
+            $this->userService->delete($user->id);
+
+            DB::commit(); // Commit transaction if all succeeds
+
+            return $this->handleResponse(
+                trans('messages.thank_you', []),
+                null,
+                'users.index',
+                [],
+            );
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback if any operation fails
+
+            return $this->handleException($e, trans('messages.general_error', []));
+        }
+    }
+
+    public function show(User $user) {
+        return view('pages.users.show', compact('user'));
+    }
+}
