@@ -29,17 +29,17 @@ return new class extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 
-            // $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
 
-            // // Foreign Key Constraint
-            // $table->foreign('company_id')
-            //     ->references('id')
-            //     ->on('companies')
-            //     // ->onUpdate('cascade')
-            //     ->onDelete('cascade');
+            // Foreign Key Constraint
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                // ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            // // Indexes for Performance
-            // $table->index('company_id');
+            // Indexes for Performance
+            $table->index('company_id');
         });
     }
 
