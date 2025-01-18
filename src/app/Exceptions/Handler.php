@@ -7,6 +7,13 @@ use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Illuminate\Support\ViewErrorBag;
 // use Illuminate\Support\MessageBag;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
+use App\Exceptions\CustomException;
 
 class Handler extends ExceptionHandler {
     /**
@@ -42,6 +49,9 @@ class Handler extends ExceptionHandler {
     public function register(): void {
         $this->reportable(function (Throwable $e) {
             // Add custom logic for reporting exceptions if needed.
+            // if (config('app.debug')) {
+            //     $this->logException($e);
+            // }
         });
     }
 
@@ -56,13 +66,21 @@ class Handler extends ExceptionHandler {
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Throwable $exception) {
-        // Handle specific HTTP exceptions.
-        if ($this->isHttpException($exception)) {
-            // Additional logic for specific HTTP exceptions can be added here.
-        }
+        // // Handle specific HTTP exceptions.
+        // if ($this->isHttpException($exception)) {
+        //     // Additional logic for specific HTTP exceptions can be added here.
+        // }
 
-        // Default exception handling, using Laravel's parent implementation.
-        return parent::render($request, $exception);
+        // // Default exception handling, using Laravel's parent implementation.
+        // return parent::render($request, $exception);
+
+        // Dynamically handle specific exception types
+        return match (true) {
+            $exception instanceof CustomException => $this->handleCustomException($request, $exception),
+            $exception instanceof \Illuminate\Validation\ValidationException => $this->handleValidationException($request, $exception),
+            $exception instanceof \Illuminate\Auth\AuthenticationException => $this->handleAuthenticationException($request, $exception),
+            default => parent::render($request, $exception)
+        };
     }
 
     /**
@@ -134,5 +152,173 @@ class Handler extends ExceptionHandler {
     protected function registerErrorViewPaths() {
         // Ensure RegisterErrorViewPaths is implemented correctly.
         (new \App\Exceptions\RegisterErrorViewPaths)();
+    }
+
+    /**
+     * Dynamically log exceptions with detailed context.
+     *
+     * @param \Throwable $exception
+     */
+    protected function logException(Throwable $exception): void {
+        Log::error($exception->getMessage(), [
+            'exception' => $exception->getTraceAsString(),
+            'user' => auth()->check() ? auth()->id() : 'guest',
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
+            'context' => method_exists($exception, 'getContext') ? $exception->getContext() : [],
+        ]);
+    }
+
+    /**
+     * Render either JSON or HTML response based on the request type.
+     */
+    protected function renderResponse(
+        Request $request,
+        string $errorType,
+        string $message,
+        array $context,
+        int $statusCode
+    ): JsonResponse|Response {
+        if ($request->expectsJson()) {
+            return $this->renderJsonResponse(
+                $errorType,
+                $message,
+                $context,
+                $statusCode
+            );
+        }
+
+        return $this->renderViewResponse(
+            'errors.custom',
+            $errorType,
+            $message,
+            $context,
+            $statusCode
+        );
+    }
+
+    /**
+     * Render a JSON response.
+     *
+     * @param string $errorType
+     * @param string $message
+     * @param array $context
+     * @param int $statusCode
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function renderJsonResponse(
+        string $errorType,
+        string $message,
+        array $context,
+        int $statusCode
+    ): JsonResponse {
+        return response()->json([
+            'error' => $errorType,
+            'message' => $message,
+            'context' => $context,
+        ], $statusCode);
+    }
+
+    /**
+     * Render a view response.
+     *
+     * @param string $view
+     * @param string $errorType
+     * @param string $message
+     * @param array $context
+     * @param int $statusCode
+     * @return \Illuminate\Http\Response
+     */
+    protected function renderViewResponse(
+        string $view,
+        string $errorType,
+        string $message,
+        array $context,
+        int $statusCode
+    ): Response {
+        return response()->view($view, [
+            'error' => $errorType,
+            'message' => $message,
+            'context' => $context,
+        ], $statusCode);
+    }
+
+    /**
+     * Handle CustomException.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Exceptions\CustomException  $exception
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    protected function handleCustomException(Request $request, CustomException $exception) {
+        $statusCode = $exception->getStatusCode() ?? 400;
+        $errorType = $exception->getErrorType() ?? trans('messages.application_error', []);
+        $errorView = $exception->getErrorView() ?? 'errors.custom';
+        $context = $exception->getContext() ?? [];
+        // $request->ajax();
+
+        if ($request->expectsJson()) {
+            return $this->renderResponse(
+                $request,
+                $errorType,
+                $exception->getMessage(),
+                $context,
+                $statusCode
+            );
+        }
+
+        return $this->renderViewResponse(
+            $errorView,
+            $errorType,
+            $exception->getMessage(),
+            $context,
+            $statusCode
+        );
+    }
+
+    /**
+     * Handle ValidationException.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @return @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    protected function handleValidationException(
+        Request $request,
+        \Illuminate\Validation\ValidationException $exception
+    ) {
+        $context = ['errors' => $exception->errors()];
+
+        return $this->renderResponse(
+            $request,
+            trans('messages.validation_error', []),
+            $exception->getMessage(),
+            $context,
+            $exception->status
+        );
+    }
+
+    /**
+     * Handle AuthenticationException.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    protected function handleAuthenticationException(
+        Request $request,
+        \Illuminate\Auth\AuthenticationException $exception
+    ) {
+        if ($request->expectsJson()) {
+            return $this->renderResponse(
+                $request,
+                trans('messages.authentication_error', []),
+                $exception->getMessage(),
+                [],
+                401
+            );
+        }
+
+        return redirect()->route('login');
     }
 }
