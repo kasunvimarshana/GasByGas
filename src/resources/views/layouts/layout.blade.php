@@ -31,6 +31,7 @@
         @include('partials.sidebar.right-sidebar')
 
     </div>
+    <x-notification />
     <!--end::App Wrapper-->
 @stop
 

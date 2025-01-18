@@ -1,6 +1,3 @@
-@php
-// dd(json_decode(file_get_contents(public_path('build/manifest.json')), true));
-@endphp
 @extends('layouts.layout')
 
 @section('content_header')
