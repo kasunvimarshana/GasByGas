@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Services\NotificationService\NotificationServiceInterface;
 use App\Services\NotificationService\NotificationFactory;
+use App\Services\ActivityLoggerService\ActivityLoggerInterface;
+use App\Services\ActivityLoggerService\ActivityLoggerService;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -17,6 +19,9 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->bind(NotificationServiceInterface::class,
                             fn() => NotificationFactory::create('toastr'));
+
+        $this->app->singleton(ActivityLoggerInterface::class,
+                                ActivityLoggerService::class);
     }
 
     /**
