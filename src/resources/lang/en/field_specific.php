@@ -12,6 +12,7 @@ return [
     "email" => "Email",
     "password" => "Password",
     "retype_password" => "Retype Password",
+    "confirm_password" => "Confirm Password",
     "remember_me" => "Remember Me",
     "register" => "Register",
     "i_forgot_my_password" => "I forgot my password",
@@ -43,4 +44,5 @@ return [
     "select_color" => "Select Color",
     "phone" => "Phone",
     "address" => "Address",
+    "image" => "Image",
 ];

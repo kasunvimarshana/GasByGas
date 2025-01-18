@@ -34,12 +34,27 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware([])->group(function () {
+Route::get('/password/reset', function () {
+    return view('auth.passwords.email');
+})->name('password.request');
+
+Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('/password/reset/{token}', function ($token) {
+    return view('auth.passwords.reset', ['token' => $token]);
+})->name('password.reset');
+
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
+Route::middleware(['auth'])->group(function () {
     //
     Route::get('/', function () {
         return view('welcome');
