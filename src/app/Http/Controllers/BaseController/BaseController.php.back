@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers\BaseController;
+
+use Illuminate\Support\Facades\Log;
+use Throwable;
+use App\Http\Controllers\Controller;
+
+abstract class BaseController extends Controller {
+    /**
+     * Shared logging method for all controllers.
+     *
+     * @param string $message
+     * @param array $context
+     */
+    protected function log(string $message, array $context = []): void {
+        Log::info($message, $context);
+    }
+
+    /**
+     * Shared error handling.
+     *
+     * @param \Throwable $exception
+     * @return void
+     */
+    protected function handleError(Throwable $exception): void {
+        Log::error($exception->getMessage(), [
+            'exception' => $exception,
+        ]);
+    }
+}
