@@ -45,3 +45,23 @@ class ServiceProviderRegistrar {
         }
     }
 }
+
+/*
+// Usage
+use App\Services\ServiceProviderRegistrar;
+use Illuminate\Support\Facades\App;
+
+class SomeController extends Controller {
+    protected $serviceProviderRegistrar;
+
+    public function __construct(ServiceProviderRegistrar $serviceProviderRegistrar) {
+        $this->serviceProviderRegistrar = $serviceProviderRegistrar;
+    }
+
+    public function registerCustomProvider()
+    {
+        $provider = 'App\\Providers\\CustomServiceProvider';  // The full class name
+        $this->serviceProviderRegistrar->registerServiceProvider(App::getInstance(), $provider);
+    }
+}
+*/
