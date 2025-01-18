@@ -71,6 +71,10 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path(env('UPLOADED_FILES_DIRECTORY', 'uploads'))
+                    => storage_path('app/'.env('UPLOADED_FILES_DIRECTORY', 'uploads')),
     ],
+
+    'uploaded_files_directory' => env('UPLOADED_FILES_DIRECTORY', 'uploads'),
 
 ];
