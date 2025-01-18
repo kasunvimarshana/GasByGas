@@ -13,15 +13,21 @@ use App\Services\LocalFileService\LocalFileServiceInterface;
 class LocalFileService implements LocalFileServiceInterface {
     protected string $storageDisk;
 
-    public function __construct(string $storageDisk = 'local') {
-        $this->storageDisk = $storageDisk;
+    public function __construct(string $storageDisk = null) {
+        $this->storageDisk = $storageDisk ?? config('filesystems.default', 'local');
     }
 
     /**
      * Upload a file (Supports UploadedFile and Local Files)
      */
-    public function uploadFile(UploadedFile|string $file, string $directory, ?string $fileName = null): array {
+    public function uploadFile(
+        UploadedFile|string $file,
+        string $directory,
+        ?string $fileName = null
+    ): array {
         try {
+            $this->ensureDirectoryExists($directory);
+
             if ($file instanceof UploadedFile) {
                 return $this->uploadUploadedFile($file, $directory, $fileName);
             } elseif (is_string($file) && file_exists($file)) {
@@ -35,7 +41,11 @@ class LocalFileService implements LocalFileServiceInterface {
         }
     }
 
-    private function uploadUploadedFile(UploadedFile $file, string $directory, ?string $fileName = null): array {
+    private function uploadUploadedFile(
+        UploadedFile $file,
+        string $directory,
+        ?string $fileName = null
+    ): array {
         $fileName = $fileName ?? $this->generateUniqueFileName($file);
         // $filePath = Storage::disk($this->storageDisk)->putFileAs($directory, $file, $fileName);
         $filePath = Storage::disk($this->storageDisk)->put($directory . '/' . $fileName, $file);
@@ -48,7 +58,11 @@ class LocalFileService implements LocalFileServiceInterface {
         ];
     }
 
-    private function uploadLocalFile(string $localFilePath, string $directory, ?string $fileName = null): array {
+    private function uploadLocalFile(
+        string $localFilePath,
+        string $directory,
+        ?string $fileName = null
+    ): array {
         $fileName = $fileName ?? $this->generateUniqueFileName($localFilePath);
         $fileContents = file_get_contents($localFilePath);
         // $filePath = Storage::disk($this->storageDisk)->putFileAs($directory, $fileContents, $fileName);
