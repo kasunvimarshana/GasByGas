@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "copy-img": "php artisan assets:copy-images"
     },
     "devDependencies": {
         "axios": "^1.6.4",
