@@ -13,6 +13,8 @@ use App\Services\LocaleService\LocaleServiceInterface;
 use App\Services\LocaleService\LocaleService;
 use App\Services\PageDetailsService\PageDetailsServiceInterface;
 use App\Services\PageDetailsService\PageDetailsService;
+use App\Services\PaginationService\PaginationServiceInterface;
+use App\Services\PaginationService\PaginationService;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -37,6 +39,9 @@ class AppServiceProvider extends ServiceProvider {
 
         $this->app->bind(PageDetailsServiceInterface::class,
                             PageDetailsService::class);
+
+        $this->app->bind(PaginationServiceInterface::class,
+                            PaginationService::class);
     }
 
     /**
