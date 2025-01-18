@@ -47,8 +47,8 @@ class LocalFileService implements LocalFileServiceInterface {
         ?string $fileName = null
     ): array {
         $fileName = $fileName ?? $this->generateUniqueFileName($file);
-        // $filePath = Storage::disk($this->storageDisk)->putFileAs($directory, $file, $fileName);
-        $filePath = Storage::disk($this->storageDisk)->put($directory . '/' . $fileName, $file);
+        $filePath = Storage::disk($this->storageDisk)->putFileAs($directory, $file, $fileName);
+        // $filePath = Storage::disk($this->storageDisk)->put($directory . '/' . $fileName, $file);
 
         return [
             'name' => $file->getClientOriginalName(),
