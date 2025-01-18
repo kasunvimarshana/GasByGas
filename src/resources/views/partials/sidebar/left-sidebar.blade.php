@@ -22,6 +22,7 @@
     <!--end::Sidebar Brand-->
 
     <!--begin::Sidebar Wrapper-->
+    <x-sidebar />
     <!--end::Sidebar Wrapper-->
 </aside>
 <!--end::Sidebar-->
