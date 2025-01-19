@@ -11,6 +11,7 @@ use App\Services\UserService\UserServiceInterface;
 use App\Models\User;
 use App\Services\LocalFileService\LocalFileServiceInterface;
 use App\Services\LocalFileService\LocalFileService;
+use App\Events\UserCreated;
 
 class UserService extends BaseService implements UserServiceInterface {
     protected LocalFileServiceInterface $localFileService;
@@ -42,6 +43,10 @@ class UserService extends BaseService implements UserServiceInterface {
 
                 // Create the user.
                 $user = User::create($data);
+
+                // Fire the event
+                event(new UserCreated($user));
+
                 return $user;
             } catch (Exception $e) {
                 // DB::rollBack();
