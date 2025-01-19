@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder {
         $this->call([
             UserSeeder::class,
             NavigationItemSeeder::class,
+            CompanySeeder::class,
         ]);
     }
 }
