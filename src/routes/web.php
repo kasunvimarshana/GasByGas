@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -81,6 +82,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{company}/edit', [CompanyController::class, 'update'])->name('update');
         Route::post('{company}/delete', [CompanyController::class, 'destroy'])->name('destroy');
         Route::get('{company}/show', [CompanyController::class, 'show'])->name('show');
+    });
+
+    // Product CRUD operations
+    Route::prefix('products')->name('products.')->group(function () {
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        Route::get('create', [ProductController::class, 'create'])->name('create');
+        Route::post('create', [ProductController::class, 'store'])->name('store');
+        Route::get('{product}/edit', [ProductController::class, 'edit'])->name('edit');
+        Route::post('{product}/edit', [ProductController::class, 'update'])->name('update');
+        Route::post('{product}/delete', [ProductController::class, 'destroy'])->name('destroy');
+        Route::get('{product}/show', [ProductController::class, 'show'])->name('show');
     });
     //
 });

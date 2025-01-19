@@ -45,4 +45,6 @@ return [
     "phone" => "Phone",
     "address" => "Address",
     "image" => "Image",
+    "price" => "Price",
+    "sku" => "SKU",
 ];
