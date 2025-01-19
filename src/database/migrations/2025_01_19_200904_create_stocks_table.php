@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->timestamps();
             // $table->integer('status')->nullable()->default(0);
             $table->integer('quantity')->default(0);
+            $table->integer('reorder_level')->default(0); // (Threshold for low-stock alerts)
             // $table->decimal('price', 10, 2)->default(0);
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();

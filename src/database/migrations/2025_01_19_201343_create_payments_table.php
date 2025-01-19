@@ -19,6 +19,8 @@ return new class extends Migration {
             $table->decimal('amount', 10, 2)->default(0);
             $table->string('reference')->nullable();
             $table->string('description')->nullable();
+            $table->string('payment_method')->nullable(); // (Credit Card, PayPal, etc.)
+            // $table->string('transaction_id')->nullable(); // (Unique)
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('related_entity_id'); // Related model's ID
             $table->string('related_entity_type');           // Related model's type
