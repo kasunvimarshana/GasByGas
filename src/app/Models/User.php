@@ -40,7 +40,6 @@ class User extends Authenticatable {
         'address',
         'phone',
         'image',
-        // 'company_id',
     ];
 
     /**
@@ -78,4 +77,27 @@ class User extends Authenticatable {
     //         set: fn ($value) => bcrypt($value)
     //     );
     // }
+
+    // public function companies() {
+    //     return $this->belongsToMany(
+    //         \App\Models\Company::class,  // The related Company model
+    //         'company_users',            // The pivot table
+    //         'user_id',                  // Foreign key for the user in the pivot table
+    //         'company_id'                // Foreign key for the company in the pivot table
+    //     )
+    //     // ->withPivot()
+    //     ->using(\App\Models\CompanyUser::class)
+    //     ->withTimestamps();
+    // }
+
+    public function company() {
+        return $this->hasOneThrough(
+            \App\Models\Company::class,  // The related model (Company)
+            \App\Models\CompanyUser::class,  // The pivot model (CompanyUser)
+            'user_id',  // Foreign key on the pivot model (CompanyUser) for User
+            'id',       // Foreign key on the related model (Company) for CompanyUser
+            'id',       // Local key on the User model
+            'company_id'  // Foreign key on the pivot model for the related model (CompanyUser)
+        );
+    }
 }

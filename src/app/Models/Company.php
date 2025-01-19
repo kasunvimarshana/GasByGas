@@ -63,4 +63,16 @@ class Company extends Model {
         return $this->hasMany(self::class, 'parent_id', 'id')->with('children');
     }
 
+    public function users() {
+        return $this->belongsToMany(
+            \App\Models\User::class,    // The related User model
+            'company_users',            // The pivot table
+            'company_id',               // Foreign key for the company in the pivot table
+            'user_id'                   // Foreign key for the user in the pivot table
+        )
+        // ->withPivot()
+        ->using(\App\Models\CompanyUser::class)
+        ->withTimestamps();
+    }
+
 }
