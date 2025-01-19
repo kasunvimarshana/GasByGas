@@ -26,7 +26,7 @@
 <!--end::To the end-->
 <!--begin::Copyright-->
 <strong>
-    Copyright &copy; 2024-2025&nbsp;
+    Copyright &copy; {{ date('Y') }}&nbsp;
     <a href="#" class="text-decoration-none">{{ config('layout.logo') }}</a>.
 </strong>
 All rights reserved.
