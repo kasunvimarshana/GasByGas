@@ -44,6 +44,13 @@ class UserController extends BaseController {
         // }
         try {
             $userQueryBuilder = $this->userService->query();
+            $userQueryBuilder = User::query();
+            $userQueryBuilder = $userQueryBuilder->whereHas('company', function($q) {
+                $companyId = optional(auth()->user()?->company)->id;
+                // $q->where('companies.id', $companyId);
+                $q->where('company_users.company_id', $companyId);
+            });
+
             $users = $this->paginationService->paginate($userQueryBuilder,
                                                         $request->perPage ?? 15);
 

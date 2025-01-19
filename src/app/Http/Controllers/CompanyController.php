@@ -38,6 +38,12 @@ class CompanyController extends BaseController {
     public function index(Request $request) {
         try {
             $companyQueryBuilder = $this->companyService->query();
+
+            $companyQueryBuilder = $companyQueryBuilder->where(function($q) {
+                $companyId = optional(auth()->user()?->company)->id;
+                $q->where('id', $companyId);
+            });
+
             $companies = $this->paginationService->paginate($companyQueryBuilder,
                                                             $request->perPage ?? 15);
 
