@@ -100,4 +100,14 @@ class User extends Authenticatable {
             'company_id'  // Foreign key on the pivot model for the related model (CompanyUser)
         );
     }
+
+    public function purchases() {
+        return $this->morphMany(
+            \App\Models\Order::class,   // The related model class (Order)
+            'related_entity',           // The morph type column (related_entity_type)
+            'related_entity_type',      // The type column in the order table
+            'related_entity_id',        // The ID column in the order table
+            'id'                        // Local key in the related model
+        );
+    }
 }

@@ -87,4 +87,18 @@ class Company extends Model {
         ->withTimestamps();
     }
 
+    public function orders() {
+        return $this->hasMany(\App\Models\Order::class, 'company_id', 'id');
+    }
+
+    public function purchases() {
+        return $this->morphMany(
+            \App\Models\Order::class,   // The related model class (Order)
+            'related_entity',           // The morph type column (related_entity_type)
+            'related_entity_type',      // The type column in the order table
+            'related_entity_id',        // The ID column in the order table
+            'id'                        // Local key in the related model
+        );
+    }
+
 }
