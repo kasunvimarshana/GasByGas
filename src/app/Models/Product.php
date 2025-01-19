@@ -51,4 +51,16 @@ class Product extends Model {
         return $logOptions;
     }
 
+    public function companies() {
+        return $this->belongsToMany(
+            \App\Models\Company::class, // The related Product model
+            'company_products',         // The pivot table
+            'product_id',               // Foreign key for the product in the pivot table
+            'company_id'                // Foreign key for the company in the pivot table
+        )
+        // ->withPivot()
+        ->using(\App\Models\CompanyProduct::class)
+        ->withTimestamps();
+    }
+
 }
