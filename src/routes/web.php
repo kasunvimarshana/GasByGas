@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -69,6 +70,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{user}/edit', [UserController::class, 'update'])->name('update');
         Route::post('{user}/delete', [UserController::class, 'destroy'])->name('destroy');
         Route::get('{user}/show', [UserController::class, 'show'])->name('show');
+    });
+
+    // Company CRUD operations
+    Route::prefix('companies')->name('companies.')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('index');
+        Route::get('create', [CompanyController::class, 'create'])->name('create');
+        Route::post('create', [CompanyController::class, 'store'])->name('store');
+        Route::get('{company}/edit', [CompanyController::class, 'edit'])->name('edit');
+        Route::post('{company}/edit', [CompanyController::class, 'update'])->name('update');
+        Route::post('{company}/delete', [CompanyController::class, 'destroy'])->name('destroy');
+        Route::get('{company}/show', [CompanyController::class, 'show'])->name('show');
     });
     //
 });
