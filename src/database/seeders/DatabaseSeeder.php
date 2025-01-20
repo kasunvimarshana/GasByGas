@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder {
             CompanySeeder::class,
             // UserSeeder::class,
             NavigationItemSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

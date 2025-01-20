@@ -37,6 +37,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -93,6 +94,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{product}/edit', [ProductController::class, 'update'])->name('update');
         Route::post('{product}/delete', [ProductController::class, 'destroy'])->name('destroy');
         Route::get('{product}/show', [ProductController::class, 'show'])->name('show');
+    });
+
+    // Stock CRUD operations
+    Route::prefix('stocks')->name('stocks.')->group(function () {
+        Route::get('/', [StockController::class, 'index'])->name('index');
+        Route::get('create', [StockController::class, 'create'])->name('create');
+        Route::post('create', [StockController::class, 'store'])->name('store');
+        Route::get('{stock}/edit', [StockController::class, 'edit'])->name('edit');
+        Route::post('{stock}/edit', [StockController::class, 'update'])->name('update');
+        Route::post('{stock}/delete', [StockController::class, 'destroy'])->name('destroy');
+        Route::get('{stock}/show', [StockController::class, 'show'])->name('show');
     });
     //
 });

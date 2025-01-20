@@ -47,4 +47,9 @@ return [
     "image" => "Image",
     "price" => "Price",
     "sku" => "SKU",
+    "product" => "Product",
+    "select_product" => "Select Product",
+    "quantity" => "Quantity",
+    "company" => "Company",
+    "reorder_level" => "Reorder Level",
 ];

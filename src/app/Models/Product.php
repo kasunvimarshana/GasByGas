@@ -63,4 +63,19 @@ class Product extends Model {
         ->withTimestamps();
     }
 
+    public function stocks() {
+        return $this->hasMany(\App\Models\Stock::class, 'product_id', 'id');
+    }
+
+    public function stockMovements() {
+        return $this->hasManyThrough(
+            \App\Models\StockMovement::class, // Target model
+            \App\Models\Stock::class,         // Intermediate model
+            'product_id',                     // Foreign key on the Stock table
+            'stock_id',                       // Foreign key on the StockMovement table
+            'id',                             // Local key on the Product table
+            'id'                              // Local key on the Stock table
+        );
+    }
+
 }
