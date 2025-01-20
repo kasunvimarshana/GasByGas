@@ -75,6 +75,18 @@ class Company extends Model {
         ->withTimestamps();
     }
 
+    public function admins() {
+        return $this->belongsToMany(
+            \App\Models\User::class,         // Related User model
+            'company_users',                 // Pivot table
+            'company_id',                    // Foreign key for the company in the pivot table
+            'user_id'                        // Foreign key for the user in the pivot table
+        )
+        ->wherePivot('is_company_admin', true) // Filter by admin status
+        ->using(\App\Models\CompanyUser::class) // Use the custom pivot class
+        ->withTimestamps();                     // Include timestamps
+    }
+
     public function products() {
         return $this->belongsToMany(
             \App\Models\Product::class, // The related Product model
@@ -103,6 +115,16 @@ class Company extends Model {
 
     public function stocks() {
         return $this->hasMany(\App\Models\Stock::class, 'company_id', 'id');
+    }
+
+    public function carts() {
+        return $this->morphMany(
+            \App\Models\Cart::class,    // The related model class (Cart)
+            'related_entity',           // The morph type column (related_entity_type)
+            'related_entity_type',      // The type column in the cart table
+            'related_entity_id',        // The ID column in the cart table
+            'id'                        // Local key in the related model
+        );
     }
 
 }

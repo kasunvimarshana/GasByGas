@@ -18,6 +18,7 @@ return new class extends Migration {
             // $table->integer('status')->nullable()->default(0);
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('is_company_admin')->default(false)->comment('Indicates if the user is an admin for the company');
 
             // Foreign Key Constraint
             $table->foreign('company_id')

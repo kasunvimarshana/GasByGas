@@ -33,18 +33,20 @@ class CompanyObserver {
 
             // Attach the created user to the company in the pivot table
             $company->users()->attach($user->id, [
-                // 'started_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+                'is_company_admin' => true,
             ]);
 
-            foreach (Product::all() as $key => $value) {
-                $company->stocks()->updateOrCreate([
-                    'product_id' => $value->id,
-                ], [
-                    'quantity' => 0,
-                ]);
-            }
+            $this->initializeStocks($company);
         } catch (Exception $e) {
             Log::error('Error creating user for company: ' . $e->getMessage());
         }
+    }
+
+    private function initializeStocks(Company $company): void {
+        Product::all()->each(function ($product) use ($company) {
+            $company->stocks()->updateOrCreate(['product_id' => $product->id], ['quantity' => 0]);
+        });
     }
 }

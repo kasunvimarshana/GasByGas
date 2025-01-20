@@ -19,6 +19,7 @@ class CompanyUser extends Pivot {
     protected $fillable = [
         'company_id',
         'user_id',
+        'is_company_admin',
     ];
 
     /**
@@ -35,6 +36,7 @@ class CompanyUser extends Pivot {
      */
     protected $casts = [
         // 'metadata' => 'array',
+        'is_company_admin' => 'boolean',
     ];
 
     public $timestamps = true;

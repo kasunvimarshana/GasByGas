@@ -101,12 +101,34 @@ class User extends Authenticatable {
         );
     }
 
+    public function adminOfCompanies() {
+        return $this->belongsToMany(
+            \App\Models\Company::class,      // Related Company model
+            'company_users',                 // Pivot table
+            'user_id',                       // Foreign key for the user in the pivot table
+            'company_id'                     // Foreign key for the company in the pivot table
+        )
+        ->wherePivot('is_company_admin', true) // Filter by admin status
+        ->using(\App\Models\CompanyUser::class) // Use the custom pivot class
+        ->withTimestamps();                     // Include timestamps
+    }
+
     public function purchases() {
         return $this->morphMany(
             \App\Models\Order::class,   // The related model class (Order)
             'related_entity',           // The morph type column (related_entity_type)
             'related_entity_type',      // The type column in the order table
             'related_entity_id',        // The ID column in the order table
+            'id'                        // Local key in the related model
+        );
+    }
+
+    public function carts() {
+        return $this->morphMany(
+            \App\Models\Cart::class,    // The related model class (Cart)
+            'related_entity',           // The morph type column (related_entity_type)
+            'related_entity_type',      // The type column in the cart table
+            'related_entity_id',        // The ID column in the cart table
             'id'                        // Local key in the related model
         );
     }
