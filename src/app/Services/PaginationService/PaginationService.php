@@ -31,7 +31,7 @@ class PaginationService implements PaginationServiceInterface {
      */
     public function paginate(
         mixed $data,
-        int $perPage = 15,
+        int $perPage = PHP_INT_MAX,
         ?int $currentPage = null,
         ?string $path = null,
         ?array $options = []
