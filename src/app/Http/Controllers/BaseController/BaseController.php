@@ -50,8 +50,9 @@ abstract class BaseController extends Controller {
      * @param mixed|null $data
      * @param string|null $redirectRoute
      * @param array $routeParams
-     * @param string $notificationType
-     * @param int $statusCode
+     * @param string|null $notificationType
+     * @param int|null $statusCode
+     * @param string|null $fragment
      * @return JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function handleResponse(
@@ -60,7 +61,8 @@ abstract class BaseController extends Controller {
         ?string $redirectRoute = null,
         ?array $routeParams = [],
         ?string $notificationType = null,
-        ?int $statusCode = null
+        ?int $statusCode = null,
+        ?string $fragment = null
     ) {
         $notificationType = $notificationType ?? $this->config['default_notification_type'];
         $statusCode = $statusCode ?? $this->config['default_success_status_code'];
@@ -72,9 +74,13 @@ abstract class BaseController extends Controller {
         } else {
             $this->notify($notificationType, $message);
 
+            // $response = $redirectRoute
+            //     ? redirect()->route($redirectRoute, $routeParams)->with('success', $message)
+            //     : back()->with('success', $message);
+
             $response = $redirectRoute
-                ? redirect()->route($redirectRoute, $routeParams)->with('success', $message)
-                : back()->with('success', $message);
+                ? $this->redirectWithFragment(route($redirectRoute, $routeParams), $fragment)->with('success', $message)
+                : $this->backWithFragment($fragment)->with('success', $message);
         }
 
         $this->afterHandleResponse($response);
@@ -108,10 +114,11 @@ abstract class BaseController extends Controller {
      * Handle and log exceptions for both JSON and non-JSON requests.
      *
      * @param Throwable|Exception $exception
-     * @param string $friendlyMessage
+     * @param string|null $friendlyMessage
      * @param string|null $redirectRoute
      * @param array $routeParams
-     * @param int $statusCode
+     * @param int|null $statusCode
+     * @param string|null $fragment
      * @return JsonResponse|\Illuminate\Http\RedirectResponse
      */
     protected function handleException(
@@ -119,7 +126,8 @@ abstract class BaseController extends Controller {
         ?string $friendlyMessage = null,
         ?string $redirectRoute = null,
         ?array $routeParams = [],
-        ?int $statusCode = null
+        ?int $statusCode = null,
+        ?string $fragment = null
     ) {
         $friendlyMessage = $friendlyMessage ?? $this->config['default_error_message'];
         $statusCode = $statusCode ?? $this->config['default_error_status_code'];
@@ -139,12 +147,20 @@ abstract class BaseController extends Controller {
 
         $this->notify('error', $friendlyMessage);
 
+        // return $redirectRoute
+        //     ? redirect()->route(
+        //             $redirectRoute,
+        //             $routeParams
+        //         )->withErrors(['error' => $friendlyMessage])->withInput()
+        //     : back()->withErrors(['error' => $friendlyMessage])->withInput();
+
         return $redirectRoute
-            ? redirect()->route(
-                    $redirectRoute,
-                    $routeParams
-                )->withErrors(['error' => $friendlyMessage])->withInput()
-            : back()->withErrors(['error' => $friendlyMessage])->withInput();
+            ? $this->redirectWithFragment(route($redirectRoute, $routeParams), $fragment)
+                ->withErrors(['error' => $friendlyMessage])
+                ->withInput()
+            : $this->backWithFragment($fragment)
+                ->withErrors(['error' => $friendlyMessage])
+                ->withInput();
     }
 
     /**
@@ -251,6 +267,35 @@ abstract class BaseController extends Controller {
      */
     protected function renderView(string $view, array $data = []) {
         return view($view, $data);
+    }
+
+    /**
+     * Redirect to a given route with a fragment.
+     *
+     * @param string $url
+     * @param string|null $fragment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectWithFragment(string $url, ?string $fragment = null) {
+        $redirect = redirect()->to($url);
+        if ($fragment) {
+            $redirect->withFragment($fragment);
+        }
+        return $redirect;
+    }
+
+    /**
+     * Redirect back with a fragment.
+     *
+     * @param string|null $fragment
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function backWithFragment(?string $fragment = null) {
+        $redirect = redirect()->back();
+        if ($fragment) {
+            $redirect->withFragment($fragment);
+        }
+        return $redirect;
     }
 
     /**
