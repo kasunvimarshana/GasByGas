@@ -55,4 +55,6 @@ return [
     "type" => "Type",
     "reference" => "Reference",
     "stock" => "Stock",
+    "movements" => "Movements",
+    "stock_movements" => "Stock Movements",
 ];
