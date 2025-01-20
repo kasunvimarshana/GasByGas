@@ -8,6 +8,7 @@ use Exception;
 use App\Models\Company;
 use App\Services\UserService\UserServiceInterface;
 use App\Services\UserService\UserService;
+use App\Models\Product;
 
 class CompanyObserver {
     protected UserServiceInterface $userService;
@@ -34,6 +35,14 @@ class CompanyObserver {
             $company->users()->attach($user->id, [
                 // 'started_at' => now(),
             ]);
+
+            foreach (Product::all() as $key => $value) {
+                $company->stocks()->updateOrCreate([
+                    'product_id' => $value->id,
+                ], [
+                    'quantity' => 0,
+                ]);
+            }
         } catch (Exception $e) {
             Log::error('Error creating user for company: ' . $e->getMessage());
         }

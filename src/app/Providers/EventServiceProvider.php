@@ -31,6 +31,8 @@ class EventServiceProvider extends ServiceProvider {
         \App\Models\User::observe(\App\Observers\UserObserver::class);
         // Register the CompanyObserver for the Company model
         \App\Models\Company::observe(\App\Observers\CompanyObserver::class);
+        // Register the ProductObserver for the Product model
+        \App\Models\Product::observe(\App\Observers\ProductObserver::class);
     }
 
     /**

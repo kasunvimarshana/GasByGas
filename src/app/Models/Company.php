@@ -101,4 +101,8 @@ class Company extends Model {
         );
     }
 
+    public function stocks() {
+        return $this->hasMany(\App\Models\Stock::class, 'company_id', 'id');
+    }
+
 }

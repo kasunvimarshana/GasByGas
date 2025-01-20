@@ -46,6 +46,10 @@ class StockController extends BaseController {
         try {
             $stockQueryBuilder = $this->stockService->query();
 
+            $stockQueryBuilder = $stockQueryBuilder->where(function($q) use ($companyId) {
+                $q->where('company_id', $companyId);
+            });
+
             $stocks = $this->paginationService->paginate($stockQueryBuilder,
                                                             $request->perPage ?? 15);
 
