@@ -26,6 +26,7 @@
                     <td>
                         <a href="{!! route('stocks.show', $stock) !!}" class="btn btn-info btn-sm">{{__('messages.view')}}</a>
                         <a href="{!! route('stocks.edit', $stock) !!}" class="btn btn-warning btn-sm">{{__('messages.edit')}}</a>
+                        <a href="{!! route('stock-movements.index', $stock) !!}" class="btn btn-warning btn-sm">{{__('messages.movements')}}</a>
                         <form action="{!! route('stocks.destroy', $stock) !!}" method="POST" class="d-inline" onsubmit="return confirmDelete()">
                             @csrf
                             @method('POST')

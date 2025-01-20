@@ -38,6 +38,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\StockMovementController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -105,6 +106,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{stock}/edit', [StockController::class, 'update'])->name('update');
         Route::post('{stock}/delete', [StockController::class, 'destroy'])->name('destroy');
         Route::get('{stock}/show', [StockController::class, 'show'])->name('show');
+    });
+
+    // StockMovement CRUD operations
+    Route::prefix('stock-movements')->name('stock-movements.')->group(function () {
+        Route::post('{stock}/create', [StockMovementController::class, 'store'])->name('store');
+        Route::post('{stockMovement}/edit', [StockMovementController::class, 'update'])->name('update');
+        Route::post('{stockMovement}/delete', [StockMovementController::class, 'destroy'])->name('destroy');
+        Route::get('{stockMovement}/show', [StockMovementController::class, 'show'])->name('show');
+        Route::get('{stock}/{stockMovement?}/', [StockMovementController::class, 'index'])->name('index');
     });
     //
 });
