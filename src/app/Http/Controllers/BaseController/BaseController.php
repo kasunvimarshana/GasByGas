@@ -291,7 +291,8 @@ abstract class BaseController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     protected function backWithFragment(?string $fragment = null) {
-        $redirect = redirect()->back();
+        // $redirect = redirect()->back();
+        $redirect = back();
         if ($fragment) {
             $redirect->withFragment($fragment);
         }
