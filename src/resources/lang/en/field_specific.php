@@ -52,4 +52,7 @@ return [
     "quantity" => "Quantity",
     "company" => "Company",
     "reorder_level" => "Reorder Level",
+    "type" => "Type",
+    "reference" => "Reference",
+    "stock" => "Stock",
 ];
