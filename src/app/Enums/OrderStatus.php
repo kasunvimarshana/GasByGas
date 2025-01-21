@@ -68,4 +68,12 @@ enum OrderStatus: int {
             self::cases()
         );
     }
+
+    public function color(): string {
+        return match ($this) {
+            self::PENDING => 'warning',
+            self::COMPLETED => 'success',
+            self::CANCELLED => 'danger',
+        };
+    }
 }
