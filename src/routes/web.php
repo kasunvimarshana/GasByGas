@@ -39,6 +39,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\CartController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -115,6 +116,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{stockMovement}/delete', [StockMovementController::class, 'destroy'])->name('destroy');
         Route::get('{stockMovement}/show', [StockMovementController::class, 'show'])->name('show');
         Route::get('{stock}/{stockMovement?}/', [StockMovementController::class, 'index'])->name('index');
+    });
+
+    // Cart CRUD operations
+    Route::prefix('carts')->name('carts.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::get('create', [CartController::class, 'create'])->name('create');
+        Route::post('create', [CartController::class, 'store'])->name('store');
+        Route::get('{cart}/edit', [CartController::class, 'edit'])->name('edit');
+        Route::post('{cart}/edit', [CartController::class, 'update'])->name('update');
+        Route::post('{cart}/delete', [CartController::class, 'destroy'])->name('destroy');
+        Route::get('{cart}/show', [CartController::class, 'show'])->name('show');
     });
     //
 });
