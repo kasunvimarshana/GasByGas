@@ -19,9 +19,12 @@ return new class extends Migration {
             $table->decimal('amount', 10, 2)->default(0);
             $table->string('reference')->nullable();
             $table->string('description')->nullable();
-            $table->string('token')->unique(); // ->nullable();
-            $table->timestamp('expected_pickup_date'); // ->nullable()
+            $table->string('token')->unique()->nullable();
+            $table->timestamp('expected_pickup_date')->nullable();
             $table->integer('tolerance_period_in_days')->default(0);
+            $table->string('shipping_address')->nullable();
+            $table->string('billing_address')->nullable();
+            $table->string('payment_method')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('related_entity_id'); // Related model's ID
             $table->string('related_entity_type');           // Related model's type
@@ -46,3 +49,4 @@ return new class extends Migration {
         Schema::dropIfExists('orders');
     }
 };
+//

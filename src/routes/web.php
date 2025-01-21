@@ -40,6 +40,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -128,6 +129,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{cart}/delete', [CartController::class, 'destroy'])->name('destroy');
         Route::get('{cart}/show', [CartController::class, 'show'])->name('show');
         Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+    });
+
+    // Order CRUD operations
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('create', [OrderController::class, 'store'])->name('store');
+        Route::post('{order}/edit', [OrderController::class, 'update'])->name('update');
+        Route::post('{order}/delete', [OrderController::class, 'destroy'])->name('destroy');
+        Route::get('{order}/show', [OrderController::class, 'show'])->name('show');
+        Route::get('company', [OrderController::class, 'companyIndex'])->name('company-index');
     });
     //
 });
