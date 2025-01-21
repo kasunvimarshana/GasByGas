@@ -20,6 +20,9 @@ class EventServiceProvider extends ServiceProvider {
         \App\Events\UserCreated::class => [
             \App\Listeners\SendUserCreatedNotification::class,
         ],
+        \App\Events\OrderCreated::class => [
+            \App\Listeners\SendOrderCreatedNotification::class,
+        ],
     ];
 
     /**

@@ -20,6 +20,7 @@ use App\Models\Order;
 use App\Enums\OrderStatus;
 use App\Enums\StockMovementType;
 use Exception;
+use App\Events\OrderCreated;
 
 class OrderController extends BaseController {
     protected NotificationServiceInterface $notificationService;
@@ -140,6 +141,9 @@ class OrderController extends BaseController {
             $order = $this->orderService->update($order->id, ['amount' => $totalAmount]);
 
             DB::commit(); // Commit transaction if all succeeds
+
+            // Fire the event
+            event(new OrderCreated($order));
 
             return $this->handleResponse(
                 trans('messages.thank_you', []),

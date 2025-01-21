@@ -41,6 +41,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PushSubscriptionController;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -64,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/', function () {
         return view('welcome');
+    });
+
+    Route::prefix('push-subscriptions')->name('push-subscriptions.')->group(function () {
+        Route::post('subscribe', [PushSubscriptionController::class, 'store'])->name('store');
+        Route::post('unsubscribe', [PushSubscriptionController::class, 'destroy'])->name('destroy');
     });
 
     // User CRUD operations

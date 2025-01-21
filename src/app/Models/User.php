@@ -18,12 +18,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 // use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 // use App\Observers\UserObserver;
 
 // #[ObservedBy([UserObserver::class])]
 class User extends Authenticatable {
-    use HasApiTokens, HasFactory, Notifiable, LogsActivity, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity, HasRoles, HasPushSubscriptions;
 
     /**
      * The attributes that are mass assignable.
