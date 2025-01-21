@@ -29,4 +29,25 @@ enum StockMovementType: string {
             self::OUT => 'Stock Out',
         };
     }
+
+    /**
+     * Get a label for a specific value.
+     */
+    public static function labelFor(string $value): string {
+        return match ($value) {
+            self::IN->value => self::IN->label(),
+            self::OUT->value => self::OUT->label(),
+            default => 'Unknown',
+        };
+    }
+
+    /**
+     * Get an array representation of the enum for API responses.
+     */
+    public static function toArray(): array {
+        return array_map(
+            fn ($case) => ['value' => $case->value, 'label' => $case->label()],
+            self::cases()
+        );
+    }
 }
