@@ -345,17 +345,6 @@ return [
                     'types' => null,
                     'is_active' => true,
                 ],
-                'Order Edit' => [
-                    'title' => 'Order Edit',
-                    'icon' => 'bi bi-person me-1',
-                    'route' => 'orders.edit',
-                    // 'parent_id' => null,
-                    'order' => 0,
-                    'parameters' => ['order' => 0],
-                    'permission' => null,
-                    'types' => null,
-                    'is_active' => false,
-                ],
                 'Order Show' => [
                     'title' => 'Order Show',
                     'icon' => 'bi bi-person me-1',
