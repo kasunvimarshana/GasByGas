@@ -15,4 +15,3 @@ return [
     "authentication_error" => "Authentication Error",
     "validation_error" => "Validation Error",
 ];
-

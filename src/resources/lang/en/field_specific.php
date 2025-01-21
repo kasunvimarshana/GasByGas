@@ -63,4 +63,9 @@ return [
     "billing_address" => "Billing Address",
     "payment_method" => "Payment Method",
     "select_payment_method" => "Select Payment Method",
+    "select_company" => "Select Company",
+    "token" => "Token",
+    "expected_pickup_date" => "Expected Pickup Date",
+    "tolerance_period_in_days" => "Tolerance Period in Days",
+    "status" => "Status",
 ];
