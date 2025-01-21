@@ -76,15 +76,24 @@ class Company extends Model {
     }
 
     public function admins() {
+        return $this->relatedUsers(true);
+    }
+
+    private function relatedUsers(bool $isAdmin = false) {
         return $this->belongsToMany(
             \App\Models\User::class,         // Related User model
             'company_users',                 // Pivot table
             'company_id',                    // Foreign key for the company in the pivot table
             'user_id'                        // Foreign key for the user in the pivot table
         )
-        ->wherePivot('is_company_admin', true) // Filter by admin status
+        ->wherePivot('is_company_admin', $isAdmin) // Filter by admin status
         ->using(\App\Models\CompanyUser::class) // Use the custom pivot class
         ->withTimestamps();                     // Include timestamps
+    }
+
+    public function isAdmin(int $userId): bool {
+        // return $this->users()->where('id', $userId)->wherePivot('is_company_admin', true)->exists();
+        return $this->admins()->where('id', $userId)->exists();
     }
 
     public function products() {

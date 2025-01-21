@@ -101,16 +101,25 @@ class User extends Authenticatable {
         );
     }
 
-    public function adminOfCompanies() {
+    private function relatedCompanies(bool $isAdmin = false) {
         return $this->belongsToMany(
-            \App\Models\Company::class,      // Related Company model
-            'company_users',                 // Pivot table
-            'user_id',                       // Foreign key for the user in the pivot table
-            'company_id'                     // Foreign key for the company in the pivot table
+            \App\Models\Company::class,   // The related Company model
+            'company_users',              // The pivot table
+            'user_id',                    // Foreign key for the user in the pivot table
+            'company_id'                  // Foreign key for the company in the pivot table
         )
-        ->wherePivot('is_company_admin', true) // Filter by admin status
-        ->using(\App\Models\CompanyUser::class) // Use the custom pivot class
-        ->withTimestamps();                     // Include timestamps
+        ->wherePivot('is_company_admin', $isAdmin) // Filter by admin status
+        ->using(\App\Models\CompanyUser::class)    // Use the custom pivot class
+        ->withTimestamps();                        // Include timestamps
+    }
+
+    public function adminOfCompanies() {
+        return $this->relatedCompanies(true);
+    }
+
+    public function isCompanyAdmin(int $companyId): bool {
+        // return $this->companies()->where('id', $companyId)->wherePivot('is_company_admin', true)->exists();
+        return $this->adminOfCompanies()->where('id', $companyId)->exists();
     }
 
     public function purchases() {
