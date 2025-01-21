@@ -15,18 +15,21 @@ use App\Services\CartService\CartService;
 use App\Models\Cart;
 use App\Services\ProductService\ProductService;
 use Exception;
+use App\Services\CompanyService\CompanyService;
 
 class CartController extends BaseController {
     protected NotificationServiceInterface $notificationService;
     protected PaginationServiceInterface $paginationService;
     protected CartService $cartService;
     protected ProductService $productService;
+    protected CompanyService $companyService;
 
     public function __construct(
         NotificationServiceInterface $notificationService,
         PaginationServiceInterface $paginationService,
         CartService $cartService,
-        ProductService $productService
+        ProductService $productService,
+        CompanyService $companyService
     ) {
         parent::__construct($notificationService);
 
@@ -34,6 +37,7 @@ class CartController extends BaseController {
         $this->paginationService = $paginationService;
         $this->cartService = $cartService;
         $this->productService = $productService;
+        $this->companyService = $companyService;
     }
 
     /**
@@ -200,17 +204,19 @@ class CartController extends BaseController {
 
         try {
             $cartQueryBuilder = $this->cartService->query();
-
             $cartQueryBuilder = $this->filterByCompanyOrUser($cartQueryBuilder, $companyId);
-
             $carts = $this->paginationService->paginate($cartQueryBuilder);
+
+            $companies = $this->companyService->query()
+                                // ->where('id', '!=', $companyId)
+                                ->get();
 
             // Handle JSON response if requested
             if ($request->expectsJson()) {
                 return $this->formatJsonResponse(true, '', $carts, null);
             }
 
-            return view('pages.carts.checkout', compact('carts'));
+            return view('pages.carts.checkout', compact('carts', 'companies'));
         } catch (Exception $e) {
             return $this->handleException($e, trans('messages.general_error', []));
         }

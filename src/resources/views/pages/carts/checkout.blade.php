@@ -50,11 +50,24 @@
 <div class="row my-3">
     {{-- ======= --}}
     <form method="POST"
-            action="#"
+            action="{!! route('orders.store') !!}"
             autocomplete="off"
             enctype="multipart/form-data" >
         @method('POST')
         @csrf
+        <div class="mb-3">
+            <label>{{ __('messages.company') }}</label>
+            <select name="company_id" class="form-control select2">
+                <option value="">{{ __('messages.select_company') }}</option>
+                @foreach($companies as $k => $v)
+                <option value="{{$v->id}}" {{ old('company_id') == $v->id ? 'selected' : '' }}>{{$v->name}}</option>
+                @endforeach
+            </select>
+            @error('company_id')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
         <!-- Shipping Information -->
         {{-- <div class="mb-3">
             <label>{{__('messages.shipping_address')}}</label>
