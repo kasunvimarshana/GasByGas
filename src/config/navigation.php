@@ -299,6 +299,17 @@ return [
                     'types' => null,
                     'is_active' => false,
                 ],
+                'Checkout' => [
+                    'title' => 'Checkout',
+                    'icon' => 'bi bi-person me-1',
+                    'route' => 'carts.checkout',
+                    // 'parent_id' => null,
+                    'order' => 0,
+                    'parameters' => [],
+                    'permission' => null,
+                    'types' => null,
+                    'is_active' => true,
+                ],
             ]
         ],
     ],

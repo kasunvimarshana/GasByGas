@@ -127,6 +127,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{cart}/edit', [CartController::class, 'update'])->name('update');
         Route::post('{cart}/delete', [CartController::class, 'destroy'])->name('destroy');
         Route::get('{cart}/show', [CartController::class, 'show'])->name('show');
+        Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
     });
     //
 });

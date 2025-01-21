@@ -194,4 +194,26 @@ class CartController extends BaseController {
         }
     }
 
+    public function checkout(Request $request) {
+        // Get the authenticated user's company ID
+        $companyId = optional(auth()->user()?->company)->id;
+
+        try {
+            $cartQueryBuilder = $this->cartService->query();
+
+            $cartQueryBuilder = $this->filterByCompanyOrUser($cartQueryBuilder, $companyId);
+
+            $carts = $this->paginationService->paginate($cartQueryBuilder);
+
+            // Handle JSON response if requested
+            if ($request->expectsJson()) {
+                return $this->formatJsonResponse(true, '', $carts, null);
+            }
+
+            return view('pages.carts.checkout', compact('carts'));
+        } catch (Exception $e) {
+            return $this->handleException($e, trans('messages.general_error', []));
+        }
+    }
+
 }
