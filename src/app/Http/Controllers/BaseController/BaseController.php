@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 use Exception;
+use InvalidArgumentException;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationService\NotificationServiceInterface;
 
@@ -318,5 +319,38 @@ abstract class BaseController extends Controller {
             Log::error($e->getMessage(), ['exception' => $e]);
             throw new Exception($errorMessage ?? $e->getMessage());
         }
+    }
+
+    /**
+     * Apply filtering conditions based on the authenticated user's company or user ID.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $queryBuilder
+     * @param int|null $companyId
+     * @param int|null $userId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function filterByCompanyOrUser($queryBuilder, ?int $companyId = null, ?int $userId = null) {
+        // Get the authenticated user's company ID, if available
+        $companyId = $companyId ?? optional(auth()->user()?->company)->id;
+        // Get the authenticated user's ID, if available
+        $userId = $userId ?? auth()->user()?->id;
+
+        // Ensure that either company ID or user ID exists
+        if (!$companyId && !$userId) {
+            throw new InvalidArgumentException('Either company ID or user ID must be provided.');
+        }
+
+        return $queryBuilder->where(function($query) use ($companyId, $userId) {
+            // Apply filter based on company or user
+            if ($companyId) {
+                // If a company ID is found, filter by related entity type 'Company'
+                $query->where('related_entity_id', $companyId)
+                    ->where('related_entity_type', \App\Models\Company::class);
+            } else {
+                // If no company ID is found, filter by related entity type 'User'
+                $query->where('related_entity_id', $userId)
+                    ->where('related_entity_type', \App\Models\User::class);
+            }
+        });
     }
 }
