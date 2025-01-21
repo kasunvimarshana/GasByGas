@@ -51,7 +51,10 @@ class StockMovementObserver {
 
     private function adjustStock(StockMovement $stockMovement, string $type, int $quantity): void {
         if (!StockMovementType::isValid($type)) {
-            throw new Exception('Invalid StockMovementType: ' . $type . '. Allowed types: ' . implode(', ', array_column(StockMovementType::cases(), 'value')));
+            throw new Exception(trans('messages.invalid_stock_movement_type', [
+                'type' => $type,
+                'allowed_types' => implode(', ', array_column(StockMovementType::cases(), 'value')),
+            ]));
         }
 
 
@@ -60,7 +63,7 @@ class StockMovementObserver {
         match ($type) {
             StockMovementType::IN->value => $stock->increment('quantity', $quantity),
             StockMovementType::OUT->value => $stock->decrement('quantity', $quantity),
-            default => throw new Exception('Unsupported StockMovementType: ' . $type),
+            default => throw new Exception(trans('messages.invalid_stock_movement_type', ['type' => $type, 'allowed_types' => implode(', ', array_column(StockMovementType::cases(), 'value'))])),
         };
     }
 
