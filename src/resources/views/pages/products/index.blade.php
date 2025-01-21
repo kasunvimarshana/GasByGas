@@ -5,37 +5,37 @@
 <div class="row">
     {{-- ------------------------ --}}
     @if ($products->isNotEmpty())
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>{{__('messages.id')}}</th>
-                <th>{{__('messages.name')}}</th>
-                <th>{{__('messages.sku')}}</th>
-                <th>{{__('messages.price')}}</th>
-                <th>{{__('messages.actions')}}</th>
-            </tr>
-        </thead>
-
-        <tbody>
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($products as $product)
-                <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->sku }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>
-                        <a href="{!! route('products.show', $product) !!}" class="btn btn-info btn-sm">{{__('messages.view')}}</a>
-                        <a href="{!! route('products.edit', $product) !!}" class="btn btn-warning btn-sm">{{__('messages.edit')}}</a>
-                        <form action="{!! route('products.destroy', $product) !!}" method="POST" class="d-inline" onsubmit="return confirmDelete()">
-                            @csrf
-                            @method('POST')
-                            <button type="submit" class="btn btn-danger btn-sm">{{__('messages.delete')}}</button>
-                        </form>
-                    </td>
-                </tr>
+            <div class="col">
+                <div class="card h-100">
+                    @if($product->image)
+                        <img src="{{ asset($product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="object-fit: contain; width: 100%; height: 150px; padding: 5px;" />
+                    @endif
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $product->name }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush mt-auto">
+                        <li class="list-group-item"><strong>{{ __('messages.sku') }}:</strong> {{ $product->sku }}</li>
+                        <li class="list-group-item"><strong>{{ __('messages.price') }}:</strong> {{ $product->price }}</li>
+                    </ul>
+                    <div class="card-footer mt-auto">
+                        <div class="d-flex justify-content-between">
+                            <a href="{!! route('products.show', $product) !!}" class="btn btn-info btn-sm">{{__('messages.view')}}</a>
+                            <a href="{!! route('products.edit', $product) !!}" class="btn btn-warning btn-sm">{{__('messages.edit')}}</a>
+                            <form action="{!! route('products.destroy', $product) !!}" method="POST" onsubmit="return confirmDelete()" class="d-inline">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-danger btn-sm">{{__('messages.delete')}}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endforeach
-        </tbody>
-    </table>
+        </div>
+    </div>
     <x-pagination :paginator="$products"/>
     @else
         <div class="alert alert-info" role="alert">
