@@ -57,4 +57,10 @@ return [
     "stock" => "Stock",
     "movements" => "Movements",
     "stock_movements" => "Stock Movements",
+    "amount" => "Amount",
+    "total" => "Total",
+    "shipping_address" => "Shipping Address",
+    "billing_address" => "Billing Address",
+    "payment_method" => "Payment Method",
+    "select_payment_method" => "Select Payment Method",
 ];
