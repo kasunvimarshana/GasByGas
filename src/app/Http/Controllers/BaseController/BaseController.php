@@ -329,7 +329,7 @@ abstract class BaseController extends Controller {
      * @param int|null $userId
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    private function filterByCompanyOrUser($queryBuilder, ?int $companyId = null, ?int $userId = null) {
+    protected function filterByCompanyOrUser($queryBuilder, ?int $companyId = null, ?int $userId = null) {
         // Get the authenticated user's company ID, if available
         $companyId = $companyId ?? optional(auth()->user()?->company)->id;
         // Get the authenticated user's ID, if available
