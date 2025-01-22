@@ -274,7 +274,7 @@ class OrderController extends BaseController {
 
     private function processCartItemsWithStockCheck($carts, $order): float {
         $totalAmount = 0;
-        $carts->each(function ($cart) use ($order, $totalAmount) {
+        $carts->each(function ($cart) use ($order, &$totalAmount) {
             $stock = $this->findStock($order->company_id, $cart->product_id);
 
             if (!$stock) {
