@@ -33,6 +33,7 @@
                     </td>
                     <td>
                         <a href="{!! route('orders.show', $order) !!}" class="btn btn-info btn-sm">{{__('messages.view')}}</a>
+                        @if($order->status?->value === OrderStatus::PENDING->value)
                         <form action="{!! route('orders.update', $order) !!}" method="POST" class="d-inline" onsubmit="return confirmAction()">
                             @csrf
                             @method('POST')
@@ -45,6 +46,7 @@
                             <input type="hidden" name="status" value="{{ OrderStatus::CANCELLED->value }}" />
                             <button type="submit" class="btn btn-{{ OrderStatus::CANCELLED->color() }} btn-sm">{{ OrderStatus::CANCELLED->label() }}</button>
                         </form>
+                        @endif
                     </td>
                 </tr>
             @endforeach

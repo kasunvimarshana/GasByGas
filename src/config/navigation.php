@@ -326,7 +326,7 @@ return [
                 'Order List' => [
                     'title' => 'Order List',
                     'icon' => 'bi bi-people me-1',
-                    'route' => 'orders.company-index',
+                    'route' => 'orders.index-for-company',
                     // 'parent_id' => null,
                     'order' => 0,
                     'parameters' => [],

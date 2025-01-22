@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/', function () {
         return view('welcome');
-    });
+    })->name('dashboard');
 
     Route::prefix('push-subscriptions')->name('push-subscriptions.')->group(function () {
         Route::post('subscribe', [PushSubscriptionController::class, 'store'])->name('store');
@@ -144,7 +144,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{order}/edit', [OrderController::class, 'update'])->name('update');
         Route::post('{order}/delete', [OrderController::class, 'destroy'])->name('destroy');
         Route::get('{order}/show', [OrderController::class, 'show'])->name('show');
-        Route::get('company', [OrderController::class, 'companyIndex'])->name('company-index');
+        Route::get('company', [OrderController::class, 'indexForCompany'])->name('index-for-company');
     });
     //
 });

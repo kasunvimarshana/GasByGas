@@ -81,7 +81,7 @@ class OrderController extends BaseController {
     /**
      * Display a listing of the resource.
      */
-    public function companyIndex(Request $request) {
+    public function indexForCompany(Request $request) {
         // Get the authenticated user's company ID
         $companyId = optional(auth()->user()?->company)->id;
 
@@ -100,7 +100,7 @@ class OrderController extends BaseController {
                 return $this->formatJsonResponse(true, '', $orders, null);
             }
 
-            return view('pages.orders.company-index', compact('orders'));
+            return view('pages.orders.index-for-company', compact('orders'));
         } catch (Exception $e) {
             $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
             return $this->handleException($e, $friendlyMessage);
@@ -203,7 +203,7 @@ class OrderController extends BaseController {
             return $this->handleResponse(
                 trans('messages.thank_you', []),
                 null,
-                'orders.company-index',
+                'orders.index-for-company',
                 [],
             );
         } catch (Exception $e) {
@@ -249,7 +249,7 @@ class OrderController extends BaseController {
             return $this->handleResponse(
                 trans('messages.thank_you', []),
                 null,
-                'orders.company-index',
+                'orders.index-for-company',
                 [],
             );
         } catch (Exception $e) {
