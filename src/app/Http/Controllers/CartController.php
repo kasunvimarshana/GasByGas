@@ -212,7 +212,7 @@ class CartController extends BaseController {
             $carts = $this->paginationService->paginate($cartQueryBuilder);
 
             $companies = $this->companyService->query()
-                                // ->where('id', '!=', $companyId)
+                                ->where('id', '!=', $companyId)
                                 ->get();
 
             // Handle JSON response if requested
