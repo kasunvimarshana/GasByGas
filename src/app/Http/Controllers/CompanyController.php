@@ -41,7 +41,7 @@ class CompanyController extends BaseController {
 
             $companyQueryBuilder = $companyQueryBuilder->where(function($q) {
                 $companyId = optional(auth()->user()?->company)->id;
-                $q->where('id', $companyId);
+                $q->where('parent_id', $companyId);
             });
 
             $companies = $this->paginationService->paginate($companyQueryBuilder,
@@ -69,10 +69,15 @@ class CompanyController extends BaseController {
      * Store a newly created resource in storage.
      */
     public function store(StoreCompanyRequest $request) {
+        $companyId = optional(auth()->user()?->company)->id;
         try {
             DB::beginTransaction(); // Main transaction
 
-            $company = $this->companyService->create($request->all());
+            $requestData = array_merge($request->all(), [
+                'parent_id' => $companyId,
+            ]);
+
+            $company = $this->companyService->create($requestData);
 
             DB::commit(); // Commit transaction if all succeeds
 
