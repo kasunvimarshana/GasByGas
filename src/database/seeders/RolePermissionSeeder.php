@@ -21,9 +21,11 @@ class RolePermissionSeeder extends Seeder {
 
         foreach ($roles as $roleKey => $roleValue) {
             $roleInstance = $this->createRole($roleValue);
+            $this->command->info('Role : ' . $roleValue);
             $rolePermissions = config("roles_and_permissions.role_permissions.{$roleKey}", []);
             foreach ($rolePermissions as $permissionKey => $permissionValue) {
                 $permissionInstance = $this->createPermission($permissionValue);
+                $this->command->info('Permission : ' . $permissionValue);
                 $roleInstance->givePermissionTo($permissionInstance);
             }
         }

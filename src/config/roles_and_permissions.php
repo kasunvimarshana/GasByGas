@@ -27,6 +27,8 @@ $adminPermissions = [
     'dashboard',
 
     'users',
+    'users.create',
+    'users.store',
     'users.edit',
     'users.update',
     'users.destroy',
@@ -160,8 +162,8 @@ $superAdminPermissions = [
 return [
     // Display names for roles
     'roles' => [
-        'user' => env('USER_ROLE', 'Super Admin'),
-        'admin' => env('ADMIN_ROLE', 'Super Admin'),
+        'user' => env('USER_ROLE', 'User'),
+        'admin' => env('ADMIN_ROLE', 'Admin'),
         'super_admin' => env('SUPER_ADMIN_ROLE', 'Super Admin'),
     ],
 
