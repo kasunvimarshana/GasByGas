@@ -72,7 +72,7 @@ class PermissionGateRegistrar {
             Log::error('Permission GateRegistrar failed: ' . $e->getMessage(), [
                 'exception' => $e,
             ]);
-            throw $e;
+            // throw $e;
         }
     }
 
