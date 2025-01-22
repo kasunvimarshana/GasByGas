@@ -12,6 +12,8 @@ use Exception;
 use InvalidArgumentException;
 use App\Http\Controllers\Controller;
 use App\Services\NotificationService\NotificationServiceInterface;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\AuthorizationException;
 
 abstract class BaseController extends Controller {
     /** @var array Default configuration */
@@ -352,5 +354,35 @@ abstract class BaseController extends Controller {
                     ->where('related_entity_type', \App\Models\User::class);
             }
         });
+    }
+
+    /**
+     * Check if the user is authorized based on a gate.
+     *
+     * @param string $ability The ability name registered in the gate.
+     * @param mixed $arguments Optional arguments to pass to the gate.
+     * @param string|null $customErrorMessage Optional custom error message.
+     * @param bool $throwException Whether to throw an exception on failure (default: false).
+     * @return bool True if authorized; otherwise, false or an exception is thrown.
+     * @throws AuthorizationException
+     */
+    protected function checkGate(
+        string $ability,
+        $arguments = [],
+        ?string $customErrorMessage = null,
+        bool $throwException = false
+    ): bool {
+        if (Gate::allows($ability, $arguments)) {
+            return true;
+        }
+
+        $defaultMessage = trans('messages.unauthorized_action', []);
+        $errorMessage = $customErrorMessage ?? $defaultMessage;
+
+        if ($throwException) {
+            throw new AuthorizationException($errorMessage);
+        }
+
+        return false;
     }
 }
