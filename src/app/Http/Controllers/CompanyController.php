@@ -41,7 +41,8 @@ class CompanyController extends BaseController {
 
             $companyQueryBuilder = $companyQueryBuilder->where(function($q) {
                 $companyId = optional(auth()->user()?->company)->id;
-                $q->where('parent_id', $companyId);
+                $q->where('id', $companyId)
+                    ->orWhere('parent_id', $companyId);
             });
 
             $companies = $this->paginationService->paginate($companyQueryBuilder,
