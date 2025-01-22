@@ -45,6 +45,38 @@ class UserController extends BaseController {
         try {
             $userQueryBuilder = $this->userService->query();
             $userQueryBuilder = User::query();
+
+            $users = $this->paginationService->paginate($userQueryBuilder,
+                                                        $request->perPage ?? 15);
+
+            // Handle JSON response if requested
+            if ($request->expectsJson()) {
+                return $this->formatJsonResponse(true, '', $users, null);
+            }
+
+            return view('pages.users.index', compact('users'));
+        } catch (Exception $e) {
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexForCompany(Request $request) {
+        // $rules = [];
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            $userQueryBuilder = $this->userService->query();
+            $userQueryBuilder = User::query();
             $userQueryBuilder = $userQueryBuilder->whereHas('company', function($q) {
                 $companyId = optional(auth()->user()?->company)->id;
                 // $q->where('companies.id', $companyId);
@@ -70,6 +102,10 @@ class UserController extends BaseController {
         return view('pages.users.create');
     }
 
+    public function createForCompany() {
+        return view('pages.users.create-for-company');
+    }
+
     public function store(StoreUserRequest $request) {
         // $rules = $request->rules(); // []
         // $validated = $request->validate($rules);
@@ -92,6 +128,40 @@ class UserController extends BaseController {
                 trans('messages.thank_you', []),
                 null,
                 'users.index',
+                [],
+            );
+        } catch (Exception $e) {
+            DB::rollBack(); // Rollback if any operation fails
+
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
+        }
+    }
+
+    public function storeForCompany(StoreUserRequest $request) {
+        // $rules = $request->rules(); // []
+        // $validated = $request->validate($rules);
+        // $validator = Validator::make($request->all(), $rules);
+        // if( $validator->fails() ) {
+        //     return redirect()
+        //         ->back()
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
+        try {
+            DB::beginTransaction(); // Main transaction
+
+            // Create user from User module
+            $user = $this->userService->create($request->all());
+
+            auth()->user()->company->users()->attach($user->id);
+
+            DB::commit(); // Commit transaction if all succeeds
+
+            return $this->handleResponse(
+                trans('messages.thank_you', []),
+                null,
+                'users.index-for-company',
                 [],
             );
         } catch (Exception $e) {

@@ -81,6 +81,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('{user}/edit', [UserController::class, 'update'])->name('update');
         Route::post('{user}/delete', [UserController::class, 'destroy'])->name('destroy');
         Route::get('{user}/show', [UserController::class, 'show'])->name('show');
+        Route::get('company', [UserController::class, 'indexForCompany'])->name('index-for-company');
+        Route::get('create/company', [UserController::class, 'createForCompany'])->name('create-for-company');
+        Route::post('create/company', [UserController::class, 'store'])->name('store-for-company');
     });
 
     // Company CRUD operations
