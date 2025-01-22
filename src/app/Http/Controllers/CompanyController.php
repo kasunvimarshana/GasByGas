@@ -54,7 +54,8 @@ class CompanyController extends BaseController {
 
             return view('pages.companies.index', compact('companies'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -90,7 +91,8 @@ class CompanyController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -128,7 +130,8 @@ class CompanyController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -152,7 +155,8 @@ class CompanyController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 }

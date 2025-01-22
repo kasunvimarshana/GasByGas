@@ -49,7 +49,8 @@ class ProductController extends BaseController {
 
             return view('pages.products.index', compact('products'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -80,7 +81,8 @@ class ProductController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -118,7 +120,8 @@ class ProductController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -142,7 +145,8 @@ class ProductController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 }

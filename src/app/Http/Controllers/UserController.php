@@ -61,7 +61,8 @@ class UserController extends BaseController {
 
             return view('pages.users.index', compact('users'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -96,7 +97,8 @@ class UserController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -131,7 +133,8 @@ class UserController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -162,7 +165,8 @@ class UserController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 

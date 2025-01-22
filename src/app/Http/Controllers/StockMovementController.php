@@ -67,7 +67,8 @@ class StockMovementController extends BaseController {
 
             return view('pages.stock-movements.index', compact('stockMovements', 'stockMovement', 'stock'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -99,7 +100,8 @@ class StockMovementController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -133,7 +135,8 @@ class StockMovementController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -160,7 +163,8 @@ class StockMovementController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 }

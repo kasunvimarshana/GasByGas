@@ -153,6 +153,7 @@ class OrderController extends BaseController {
             );
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
+
             $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
             return $this->handleException($e, $friendlyMessage);
         }
@@ -207,6 +208,7 @@ class OrderController extends BaseController {
             );
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
+
             $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
             return $this->handleException($e, $friendlyMessage);
         }
@@ -252,6 +254,7 @@ class OrderController extends BaseController {
             );
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
+
             $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
             return $this->handleException($e, $friendlyMessage);
         }

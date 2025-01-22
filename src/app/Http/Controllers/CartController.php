@@ -62,7 +62,8 @@ class CartController extends BaseController {
 
             return view('pages.carts.index', compact('carts'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -126,7 +127,8 @@ class CartController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -167,7 +169,8 @@ class CartController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -194,7 +197,8 @@ class CartController extends BaseController {
         } catch (Exception $e) {
             DB::rollBack(); // Rollback if any operation fails
 
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
@@ -218,7 +222,8 @@ class CartController extends BaseController {
 
             return view('pages.carts.checkout', compact('carts', 'companies'));
         } catch (Exception $e) {
-            return $this->handleException($e, trans('messages.general_error', []));
+            $friendlyMessage = $e->getMessage() ?? trans('messages.general_error', []);
+            return $this->handleException($e, $friendlyMessage);
         }
     }
 
