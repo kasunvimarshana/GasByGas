@@ -22,7 +22,10 @@ class CompanySeeder extends Seeder {
         // Create sub-companies, associating each with a root company
         $rootCompanies->each(function ($rootCompany) {
             // Create sub-company for each root company
-            Company::factory(5)->subCompany($rootCompany)->create();
+            // Company::factory(5)->subCompany($rootCompany)->create();
+            $superAdminRole = config('roles_and_permissions.roles.super_admin');
+            // $rootCompany->admins()->each(fn($admin) => $admin->assignRole($superAdminRole));
+            $rootCompany->admins()->each(fn($admin) => $admin->syncRoles([$superAdminRole]));
         });
 
         // // Create companies with associated users

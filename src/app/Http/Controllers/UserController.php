@@ -122,6 +122,9 @@ class UserController extends BaseController {
             // Create user from User module
             $user = $this->userService->create($request->all());
 
+            $userRole = config('roles_and_permissions.roles.user');
+            $user->assignRole($userRole);
+
             DB::commit(); // Commit transaction if all succeeds
 
             return $this->handleResponse(

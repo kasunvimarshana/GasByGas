@@ -31,6 +31,9 @@ class CompanyObserver {
             // Create the user
             $user = $this->userService->create($data);
 
+            $adminRole = config('roles_and_permissions.roles.admin');
+            $user->assignRole($adminRole);
+
             // Attach the created user to the company in the pivot table
             $company->users()->attach($user->id, [
                 'created_at' => now(),
