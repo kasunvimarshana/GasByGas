@@ -362,7 +362,7 @@ abstract class BaseController extends Controller {
      * @param string $ability The ability name registered in the gate.
      * @param mixed $arguments Optional arguments to pass to the gate.
      * @param string|null $customErrorMessage Optional custom error message.
-     * @param bool $throwException Whether to throw an exception on failure (default: false).
+     * @param bool $throwException Whether to throw an exception on failure (default: true).
      * @return bool True if authorized; otherwise, false or an exception is thrown.
      * @throws AuthorizationException
      */
@@ -370,7 +370,7 @@ abstract class BaseController extends Controller {
         string $ability,
         $arguments = [],
         ?string $customErrorMessage = null,
-        bool $throwException = false
+        bool $throwException = true
     ): bool {
         if (Gate::allows($ability, $arguments)) {
             return true;
