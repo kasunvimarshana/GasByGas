@@ -159,6 +159,9 @@ class UserController extends BaseController {
 
             auth()->user()->company->users()->attach($user->id);
 
+            $adminRole = config('roles_and_permissions.roles.admin');
+            $user->assignRole($adminRole);
+
             DB::commit(); // Commit transaction if all succeeds
 
             return $this->handleResponse(
